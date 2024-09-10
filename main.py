@@ -8,21 +8,12 @@ payload_partidas = "voo_type=departure"
 payload_chegadas = "voo_type=arrivals"
 
 headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0",
     "Accept": "application/json, text/javascript, */*; q=0.01",
-    "Accept-Language": "pt-BR,en-US;q=0.7,en;q=0.3",
-    "Accept-Encoding": "gzip, deflate, br, zstd",
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     "X-Requested-With": "XMLHttpRequest",
     "Origin": "https://www.portovelho-airport.com.br",
-    "DNT": "1",
     "Connection": "keep-alive",
     "Referer": "https://www.portovelho-airport.com.br/",
-    "Cookie": "__goc_session__=scozvaoblvcngohqcelbyemlpceuruqq; has_js=1",
-    "Sec-Fetch-Dest": "empty",
-    "Sec-Fetch-Mode": "cors",
-    "Sec-Fetch-Site": "same-origin",
-    "Priority": "u=0"
 }
 
 response = requests.request("POST", url, data=payload_chegadas, headers=headers)

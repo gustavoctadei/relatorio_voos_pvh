@@ -1,6 +1,7 @@
 import requests
 import json
 import datetime_util as DateTimeUtil
+import time
 
 url = "https://www.portovelho-airport.com.br/pt-br/api/flights"
 
@@ -16,32 +17,36 @@ headers = {
     "Referer": "https://www.portovelho-airport.com.br/",
 }
 
-response = requests.request("POST", url, data=payload_chegadas, headers=headers)
-resp = json.loads(response.text)
-chegadas = resp["data"]["voos"]["voo"]
+while True:
+    response = requests.request("POST", url, data=payload_chegadas, headers=headers)
+    resp = json.loads(response.text)
+    chegadas = resp["data"]["voos"]["voo"]
 
-response = requests.request("POST", url, data=payload_partidas, headers=headers)
-resp = json.loads(response.text)
-partidas = resp["data"]["voos"]["voo"]
+    response = requests.request("POST", url, data=payload_partidas, headers=headers)
+    resp = json.loads(response.text)
+    partidas = resp["data"]["voos"]["voo"]
 
-voos = chegadas + partidas
+    voos = chegadas + partidas
 
-relatorio = ""
-data_hora = DateTimeUtil.data_hora()
-relatorio = f"##### Consulta realizada em: {data_hora} #####\n\n"
+    relatorio = ""
+    data_hora = DateTimeUtil.data_hora()
+    relatorio = f"##### Consulta realizada em: {data_hora} #####\n\n"
 
-for voo in voos:
-    numero = voo["numero"]
-    tipo = voo["tipo"]
-    data_hora_prevista = voo["dataHoraPrevista"]
-    data_hora_efetiva = voo["dataHoraEfetiva"]
-    status = voo["observacao"]
+    for voo in voos:
+        numero = voo["numero"]
+        tipo = voo["tipo"]
+        data_hora_prevista = voo["dataHoraPrevista"]
+        data_hora_efetiva = voo["dataHoraEfetiva"]
+        status = voo["observacao"]
 
-    relatorio_voo = numero + " - " + tipo + " - Previsto: " + data_hora_prevista + " - Data Hora Efetiva: " + data_hora_efetiva + " - Status: " + status + "\n"
+        relatorio_voo = numero + " - " + tipo + " - Previsto: " + data_hora_prevista + " - Data Hora Efetiva: " + data_hora_efetiva + " - Status: " + status + "\n"
 
-    relatorio = relatorio + relatorio_voo
+        relatorio = relatorio + relatorio_voo
 
-relatorio = relatorio + "\n"
+    relatorio = relatorio + "\n"
 
-with open("relatorio.txt", 'a') as arquivo:
-    arquivo.write(relatorio)
+    with open("relatorio.txt", 'a') as arquivo:
+        arquivo.write(relatorio)
+
+    intervalo_horas = 1
+    time.sleep(intervalo_horas * 3600)

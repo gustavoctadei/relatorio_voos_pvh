@@ -34,22 +34,26 @@ while True:
 
         voos = chegadas + partidas
 
-        for voo in voos:
-            numero = voo["numero"]
-            tipo = voo["tipo"]
-            data_hora_prevista = voo["dataHoraPrevista"]
-            data_hora_efetiva = voo["dataHoraEfetiva"]
-            status = voo["observacao"]
+        if (len(voos) == 0):
+            relatorio = relatorio + "\nSEM VOOS\n"
+        
+        else:
+            for voo in voos:
+                numero = voo["numero"]
+                tipo = voo["tipo"]
+                data_hora_prevista = voo["dataHoraPrevista"]
+                data_hora_efetiva = voo["dataHoraEfetiva"]
+                status = voo["observacao"]
 
-            relatorio_voo = numero + " - " + tipo + " - Previsto: " + data_hora_prevista + " - Data Hora Efetiva: " + data_hora_efetiva + " - Status: " + status + "\n"
+                relatorio_voo = numero + " - " + tipo + " - Previsto: " + data_hora_prevista + " - Data Hora Efetiva: " + data_hora_efetiva + " - Status: " + status + "\n"
 
-            relatorio = relatorio + relatorio_voo
+                relatorio = relatorio + relatorio_voo
 
         relatorio = relatorio + "\n"
 
     except:
         mensagem_erro = "\nSEM VOOS\n\n"
-        relatorio = relatorio
+        relatorio = relatorio + mensagem_erro
 
     with open("relatorio.txt", 'a') as arquivo:
         arquivo.write(relatorio)

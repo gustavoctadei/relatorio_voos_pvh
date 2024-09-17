@@ -19,11 +19,12 @@ headers = {
 
 intervalo_horas = 1
 relatorio = ""
-data_hora = DateTimeUtil.data_hora()
-relatorio = f"##### Consulta realizada em: {data_hora} #####\n\n"
 
 while True:
     try:
+        data_hora = DateTimeUtil.data_hora()
+        relatorio = f"##### Consulta realizada em: {data_hora} #####\n\n"
+
         response = requests.request("POST", url, data=payload_chegadas, headers=headers)
         resp = json.loads(response.text)
         chegadas = resp["data"]["voos"]["voo"]
@@ -49,13 +50,11 @@ while True:
 
                 relatorio = relatorio + relatorio_voo
 
-        relatorio = relatorio + "\n"
-
     except:
         mensagem_erro = "\nSEM VOOS\n\n"
         relatorio = relatorio + mensagem_erro
 
     with open("relatorio.txt", 'a') as arquivo:
-        arquivo.write(relatorio)
+        arquivo.write(relatorio + "\n")
 
     time.sleep(intervalo_horas * 3600)

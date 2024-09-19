@@ -17,7 +17,7 @@ headers = {
     "Referer": "https://www.portovelho-airport.com.br/",
 }
 
-intervalo_horas = 1
+intervalo_minutos = 15
 relatorio = ""
 
 while True:
@@ -57,4 +57,4 @@ while True:
     with open("relatorio.txt", 'a') as arquivo:
         arquivo.write(relatorio + "\n")
 
-    time.sleep(intervalo_horas * 3600)
+    time.sleep(intervalo_minutos * 60)
